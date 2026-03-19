@@ -1,0 +1,52 @@
+{
+  "name": "@ezark/agentdesk-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for adversarial AI output review. LLM-as-Judge quality control for any AI pipeline — review, score, and validate AI-generated content, code, and data.",
+  "main": "dist/index.js",
+  "bin": {
+    "agentdesk-mcp": "dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "echo '#!/usr/bin/env node' | cat - dist/index.js > /tmp/agentdesk-mcp-shebang.js && mv /tmp/agentdesk-mcp-shebang.js dist/index.js && chmod +x dist/index.js",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "ai-review",
+    "llm-as-judge",
+    "adversarial-review",
+    "quality-control",
+    "ai-evaluation",
+    "claude",
+    "agentdesk"
+  ],
+  "author": "EZARK Consulting Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rih0z/agentdesk-mcp"
+  },
+  "homepage": "https://agentdesk.dev",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ]
+}
