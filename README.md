@@ -128,4 +128,4 @@ MIT
 
 ---
 
-Built by [EZARK Consulting](https://ezark.co.jp) | [Web Version](https://agentdesk.dev)
+Built by [EZARK Consulting](https://ezark.co.jp) | [Web Version](https://agentdesk-blue.vercel.app)

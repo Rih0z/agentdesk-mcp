@@ -33,7 +33,7 @@
     "type": "git",
     "url": "https://github.com/Rih0z/agentdesk-mcp"
   },
-  "homepage": "https://agentdesk.dev",
+  "homepage": "https://agentdesk-blue.vercel.app",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@modelcontextprotocol/sdk": "^1.0.0",
