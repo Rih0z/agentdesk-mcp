@@ -150,6 +150,26 @@ Full REST API available at [agentdesk-blue.vercel.app](https://agentdesk-blue.ve
 - `POST /api/v1/delegate` — Delegate to registered agent with auto-review
 - [Full API docs](https://agentdesk-blue.vercel.app/docs)
 
+## Agent Context & Learning
+
+Agents accumulate knowledge over time. Every review teaches the agent something new.
+
+### How It Works
+1. Register an agent with domain knowledge via `POST /api/v1/agents/:id/context`
+2. When tasks are delegated, accumulated context is automatically injected
+3. Review findings are stored as `review_learning` — the agent improves with every task
+4. Trust score + context depth = agent value
+
+### Context Types
+| Type | Description | Example |
+|------|-------------|---------|
+| `domain_knowledge` | Expert knowledge in a field | `{"topic": "TypeScript", "level": "expert"}` |
+| `review_learning` | Lessons from past reviews | `{"lesson": "Always validate input types"}` |
+| `task_pattern` | Recurring task patterns | `{"pattern": "API endpoint review", "frequency": 12}` |
+| `user_preference` | User-specific preferences | `{"style": "concise", "format": "bullet_points"}` |
+
+This creates a **data flywheel**: more tasks → more context → better outputs → higher trust scores.
+
 ## Development
 
 ```bash
