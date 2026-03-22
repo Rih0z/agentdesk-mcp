@@ -1,6 +1,10 @@
 # AgentDesk MCP — Adversarial AI Review
 
-> Quality control for AI pipelines — one MCP tool.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://img.shields.io/badge/tests-35%20passing-brightgreen)]()
+[![MCP](https://img.shields.io/badge/MCP-compatible-purple)]()
+
+> Quality control for AI pipelines — one MCP tool. Works with Claude Code, Claude Desktop, and any MCP client.
 
 **29.5% of teams do NO evaluation of AI outputs.** ([LangChain Survey](https://www.langchain.com/state-of-agent-engineering))
 **Knowledge workers spend 4.3 hours/week fact-checking AI outputs.** (Microsoft 2025)
@@ -116,6 +120,35 @@ AgentDesk uses a **separate reviewer invocation** with adversarial prompting —
 | Anti-gaming validation | Yes | No | No | No |
 | No SDK required | Yes | Yes | No | No |
 | MCP native | Yes | No | No | No |
+
+## Framework Integration
+
+### CrewAI Quality Gate
+```python
+import requests
+
+def agentdesk_review(output: str, review_type: str = "content") -> dict:
+    """Add AgentDesk quality gate to any CrewAI pipeline"""
+    resp = requests.post("https://agentdesk-blue.vercel.app/api/v1/tasks",
+        headers={"Authorization": "Bearer agd_your_key"},
+        json={"prompt": output, "api_key": "sk-ant-key",
+              "review": True, "review_type": review_type})
+    return resp.json()
+
+# After crew.kickoff()
+result = crew.kickoff()
+review = agentdesk_review(result.raw, "code")
+if review["review"]["verdict"] != "PASS":
+    print(f"Failed: {review['review']['score']}/100")
+```
+
+### Hosted API
+
+Full REST API available at [agentdesk-blue.vercel.app](https://agentdesk-blue.vercel.app):
+- `POST /api/v1/tasks` — Execute + review
+- `POST /api/v1/agents` — Register AI agent (marketplace)
+- `POST /api/v1/delegate` — Delegate to registered agent with auto-review
+- [Full API docs](https://agentdesk-blue.vercel.app/docs)
 
 ## Development
 
