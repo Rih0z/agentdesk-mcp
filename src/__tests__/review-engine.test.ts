@@ -75,6 +75,28 @@ describe('parseReviewResult', () => {
     expect(result.score).toBe(75)
   })
 
+  it('handles braces inside JSON string values', () => {
+    const raw = JSON.stringify({
+      verdict: 'FAIL',
+      score: 45,
+      issues: [{ severity: 'high', category: 'code', description: 'Use { and } for formatting', suggestion: 'Fix template: ${value}' }],
+      checklist: [{ item: 'syntax', status: 'fail', evidence: 'Found {unmatched} braces in output' }],
+      summary: 'Code contains {template} syntax issues',
+    })
+    const result = parseReviewResult(raw)
+    expect(result.verdict).toBe('FAIL')
+    expect(result.score).toBe(45)
+    expect(result.issues[0].description).toBe('Use { and } for formatting')
+    expect(result.checklist[0].evidence).toBe('Found {unmatched} braces in output')
+  })
+
+  it('handles escaped quotes inside JSON strings with braces', () => {
+    const raw = '{"verdict":"PASS","score":80,"issues":[],"checklist":[{"item":"test","status":"pass","evidence":"The code uses \\"{ key: value }\\" format"}],"summary":"ok"}'
+    const result = parseReviewResult(raw)
+    expect(result.verdict).toBe('PASS')
+    expect(result.score).toBe(80)
+  })
+
   it('sanitizes malformed issue objects', () => {
     const raw = JSON.stringify({
       verdict: 'FAIL',

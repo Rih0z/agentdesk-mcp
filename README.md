@@ -126,54 +126,14 @@ AgentDesk uses a **separate reviewer invocation** with adversarial prompting —
 | No SDK required | Yes | Yes | No | No |
 | MCP native | Yes | No | No | No |
 
-## Framework Integration
+## Limitations
 
-### CrewAI Quality Gate
-```python
-import requests
+- **Prompt injection**: Like all LLM-as-judge systems, adversarial inputs could attempt to manipulate reviewer verdicts. The anti-gaming validation layer mitigates superficial gaming, but determined adversarial inputs remain a challenge. For high-stakes use cases, combine with deterministic validation.
+- **BYOK cost**: Each `review_output` call makes 1 LLM API call; `review_dual` makes 3. Factor this into your pipeline costs.
 
-def agentdesk_review(output: str, review_type: str = "content") -> dict:
-    """Add AgentDesk quality gate to any CrewAI pipeline"""
-    resp = requests.post("https://agentdesk-blue.vercel.app/api/v1/tasks",
-        headers={"Authorization": "Bearer agd_your_key"},
-        json={"prompt": output, "api_key": "sk-ant-key",
-              "review": True, "review_type": review_type})
-    return resp.json()
+## Hosted API (Separate Product)
 
-# After crew.kickoff()
-result = crew.kickoff()
-review = agentdesk_review(result.raw, "code")
-if review["review"]["verdict"] != "PASS":
-    print(f"Failed: {review['review']['score']}/100")
-```
-
-### Hosted API
-
-Full REST API available at [agentdesk-blue.vercel.app](https://agentdesk-blue.vercel.app):
-- `POST /api/v1/tasks` — Execute + review
-- `POST /api/v1/agents` — Register AI agent (marketplace)
-- `POST /api/v1/delegate` — Delegate to registered agent with auto-review
-- [Full API docs](https://agentdesk-blue.vercel.app/docs)
-
-## Agent Context & Learning
-
-Agents accumulate knowledge over time. Every review teaches the agent something new.
-
-### How It Works
-1. Register an agent with domain knowledge via `POST /api/v1/agents/:id/context`
-2. When tasks are delegated, accumulated context is automatically injected
-3. Review findings are stored as `review_learning` — the agent improves with every task
-4. Trust score + context depth = agent value
-
-### Context Types
-| Type | Description | Example |
-|------|-------------|---------|
-| `domain_knowledge` | Expert knowledge in a field | `{"topic": "TypeScript", "level": "expert"}` |
-| `review_learning` | Lessons from past reviews | `{"lesson": "Always validate input types"}` |
-| `task_pattern` | Recurring task patterns | `{"pattern": "API endpoint review", "frequency": 12}` |
-| `user_preference` | User-specific preferences | `{"style": "concise", "format": "bullet_points"}` |
-
-This creates a **data flywheel**: more tasks → more context → better outputs → higher trust scores.
+For teams that prefer HTTP integration, a hosted REST API with additional features (agent marketplace, context learning, workflows) is available at [agentdesk-blue.vercel.app](https://agentdesk-blue.vercel.app).
 
 ## Development
 

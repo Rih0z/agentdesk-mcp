@@ -173,23 +173,46 @@ Please fix ALL issues listed above. Produce the corrected output only — no exp
 
 /**
  * Extract JSON from LLM response by finding the last balanced { ... } block.
- * Handles markdown fences, extra text, and multiple brace groups safely.
+ * Handles markdown fences, extra text, multiple brace groups, and braces
+ * inside JSON string values safely.
  */
 function extractJson(raw: string): string | null {
   // Strip markdown code fences
   const stripped = raw.replace(/```(?:json)?\s*/g, '').replace(/```/g, '')
 
-  // Find the last top-level JSON object by scanning for balanced braces
+  // Find the last top-level JSON object by scanning for balanced braces,
+  // skipping braces inside quoted strings
   let depth = 0
   let start = -1
   let lastStart = -1
   let lastEnd = -1
+  let inString = false
+  let escaped = false
 
   for (let i = 0; i < stripped.length; i++) {
-    if (stripped[i] === '{') {
+    const ch = stripped[i]
+
+    if (escaped) {
+      escaped = false
+      continue
+    }
+
+    if (ch === '\\' && inString) {
+      escaped = true
+      continue
+    }
+
+    if (ch === '"') {
+      inString = !inString
+      continue
+    }
+
+    if (inString) continue
+
+    if (ch === '{') {
       if (depth === 0) start = i
       depth++
-    } else if (stripped[i] === '}') {
+    } else if (ch === '}') {
       depth--
       if (depth === 0 && start !== -1) {
         lastStart = start
