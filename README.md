@@ -1,7 +1,7 @@
 # AgentDesk MCP — Adversarial AI Review
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://img.shields.io/badge/tests-35%20passing-brightgreen)]()
+[![Tests](https://img.shields.io/badge/tests-37%20passing-brightgreen)]()
 [![MCP](https://img.shields.io/badge/MCP-compatible-purple)]()
 
 > Quality control for AI pipelines — one MCP tool. Works with Claude Code, Claude Desktop, and any MCP client.
