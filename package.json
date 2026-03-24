@@ -1,5 +1,5 @@
 {
-  "name": "@ezark/agentdesk-mcp",
+  "name": "agentdesk-mcp",
   "version": "1.0.0",
   "description": "MCP server for adversarial AI output review. LLM-as-Judge quality control for any AI pipeline — review, score, and validate AI-generated content, code, and data.",
   "main": "dist/index.js",

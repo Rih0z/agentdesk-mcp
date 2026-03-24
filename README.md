@@ -13,9 +13,14 @@ AgentDesk MCP fixes this. Add independent adversarial review to any AI pipeline 
 
 ## Quick Start
 
+### npm (recommended)
+```bash
+npx agentdesk-mcp
+```
+
 ### Claude Code
 ```bash
-claude mcp add agentdesk-mcp -- npx github:Rih0z/agentdesk-mcp
+claude mcp add agentdesk-mcp -- npx agentdesk-mcp
 ```
 
 ### Claude Desktop
@@ -24,20 +29,20 @@ claude mcp add agentdesk-mcp -- npx github:Rih0z/agentdesk-mcp
   "mcpServers": {
     "agentdesk-mcp": {
       "command": "npx",
-      "args": ["github:Rih0z/agentdesk-mcp"],
+      "args": ["-y", "agentdesk-mcp"],
       "env": { "ANTHROPIC_API_KEY": "sk-ant-..." }
     }
   }
 }
 ```
 
-### Install from GitHub
+### Install from GitHub (alternative)
 ```bash
 npm install github:Rih0z/agentdesk-mcp
 ```
 
 ### Requirements
-- `ANTHROPIC_API_KEY` environment variable (uses your own key)
+- `ANTHROPIC_API_KEY` environment variable (uses your own key — BYOK)
 
 ## Tools
 
