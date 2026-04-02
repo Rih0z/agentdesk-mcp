@@ -1,0 +1,21 @@
+# Smithery configuration for AgentDesk MCP Server
+# https://smithery.ai
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      anthropicApiKey:
+        type: string
+        description: "Anthropic API key for AI-powered adversarial review"
+    required:
+      - anthropicApiKey
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@ezark-publish/agentdesk-mcp'],
+      env: {
+        ANTHROPIC_API_KEY: config.anthropicApiKey
+      }
+    })

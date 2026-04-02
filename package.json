@@ -1,7 +1,8 @@
 {
-  "name": "agentdesk-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for adversarial AI output review. LLM-as-Judge quality control for any AI pipeline — review, score, and validate AI-generated content, code, and data.",
+  "name": "@ezark-publish/agentdesk-mcp",
+  "version": "1.3.0",
+  "mcpName": "io.github.Rih0z/agentdesk-mcp",
+  "description": "MCP server for AgentDesk AI-to-AI Service Marketplace. Quality review, service catalog, and marketplace execution — all via MCP tools.",
   "main": "dist/index.js",
   "bin": {
     "agentdesk-mcp": "dist/index.js"
@@ -11,6 +12,7 @@
     "build": "tsc",
     "postbuild": "grep -q '^#!/usr/bin/env node' dist/index.js || (echo '#!/usr/bin/env node' | cat - dist/index.js > /tmp/agentdesk-mcp-shebang.js && mv /tmp/agentdesk-mcp-shebang.js dist/index.js) && chmod +x dist/index.js",
     "start": "node dist/index.js",
+    "start:http": "MCP_HTTP_PORT=3100 node dist/index.js",
     "dev": "tsx src/index.ts",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -25,7 +27,13 @@
     "quality-control",
     "ai-evaluation",
     "claude",
-    "agentdesk"
+    "agentdesk",
+    "ai-agent",
+    "ai-marketplace",
+    "ai-to-ai",
+    "model-context-protocol",
+    "fact-checking",
+    "hallucination-detection"
   ],
   "author": "EZARK Consulting Inc.",
   "license": "MIT",
@@ -33,13 +41,15 @@
     "type": "git",
     "url": "https://github.com/Rih0z/agentdesk-mcp"
   },
-  "homepage": "https://agentdesk-blue.vercel.app",
+  "homepage": "https://agentdesk.usedevtools.com",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@modelcontextprotocol/sdk": "^1.0.0",
+    "express": "^4.21.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^20.0.0",
     "tsx": "^4.7.0",
     "typescript": "^5.4.0",

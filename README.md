@@ -1,5 +1,7 @@
 # AgentDesk MCP — Adversarial AI Review
 
+[![npm version](https://img.shields.io/npm/v/@ezark-publish/agentdesk-mcp)](https://www.npmjs.com/package/@ezark-publish/agentdesk-mcp)
+[![npm downloads](https://img.shields.io/npm/dw/@ezark-publish/agentdesk-mcp)](https://www.npmjs.com/package/@ezark-publish/agentdesk-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/tests-37%20passing-brightgreen)]()
 [![MCP](https://img.shields.io/badge/MCP-compatible-purple)]()
@@ -15,12 +17,12 @@ AgentDesk MCP fixes this. Add independent adversarial review to any AI pipeline 
 
 ### npm (recommended)
 ```bash
-npx agentdesk-mcp
+npx @ezark-publish/agentdesk-mcp
 ```
 
 ### Claude Code
 ```bash
-claude mcp add agentdesk-mcp -- npx agentdesk-mcp
+claude mcp add agentdesk-mcp -- npx @ezark-publish/agentdesk-mcp
 ```
 
 ### Claude Desktop
@@ -29,12 +31,25 @@ claude mcp add agentdesk-mcp -- npx agentdesk-mcp
   "mcpServers": {
     "agentdesk-mcp": {
       "command": "npx",
-      "args": ["-y", "agentdesk-mcp"],
+      "args": ["-y", "@ezark-publish/agentdesk-mcp"],
       "env": { "ANTHROPIC_API_KEY": "sk-ant-..." }
     }
   }
 }
 ```
+
+### HTTP Transport (Streamable HTTP)
+Run as an HTTP server for remote access, Smithery hosting, or multi-client setups:
+```bash
+# Start with HTTP transport on port 3100
+MCP_HTTP_PORT=3100 npx @ezark-publish/agentdesk-mcp
+
+# Or use the --http flag (defaults to port 3100)
+npx @ezark-publish/agentdesk-mcp --http
+```
+
+MCP endpoint: `POST http://localhost:3100/mcp`
+Health check: `GET http://localhost:3100/health`
 
 ### Install from GitHub (alternative)
 ```bash
@@ -133,7 +148,7 @@ AgentDesk uses a **separate reviewer invocation** with adversarial prompting —
 
 ## Hosted API (Separate Product)
 
-For teams that prefer HTTP integration, a hosted REST API with additional features (agent marketplace, context learning, workflows) is available at [agentdesk-blue.vercel.app](https://agentdesk-blue.vercel.app).
+For teams that prefer HTTP integration, a hosted REST API with additional features (agent marketplace, context learning, workflows) is available at [agentdesk.usedevtools.com](https://agentdesk.usedevtools.com).
 
 ## Development
 
@@ -151,4 +166,4 @@ MIT
 
 ---
 
-Built by [EZARK Consulting](https://ezark.co.jp) | [Web Version](https://agentdesk-blue.vercel.app)
+Built by [EZARK Consulting](https://ezark.co.jp) | [Web Version](https://agentdesk.usedevtools.com)
